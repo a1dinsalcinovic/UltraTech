@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TechShop.ProductPreview"
+             Title="Product Details"  NavigationPage.HasNavigationBar="False">
+    <StackLayout Orientation="Vertical">
+        <!-- Header -->
+        <FlexLayout BackgroundColor="#ffa629" HeightRequest="60" JustifyContent="SpaceBetween" AlignItems="Center">
+
+            <Image Scale="1.3" RotationY="180" Source="arrowright" HeightRequest="50" Margin="0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <!--logo -->
+            <Frame BorderColor="#eeeeee" CornerRadius="100" Padding="2" BackgroundColor="Transparent" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand" Margin="5, 0, 0, 0">
+                <Image Source="ultratechlogo.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoTapped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
+
+            <!-- korpa -->
+            <Image Source="korpa.png" HeightRequest="50" Margin="0, 0, 5, 0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnKorpaClicked"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </FlexLayout>
+
+
+        <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+            <StackLayout Orientation="Vertical">
+
+                <!-- prod. slika -->
+                <Frame BackgroundColor="#4f4f4f" BorderColor="#ffa629" Padding="0" CornerRadius="0">
+                    <Image x:Name="ProductImage" HorizontalOptions="FillAndExpand" WidthRequest="430" />
+                </Frame>
+
+                <!--prod. info -->
+                <Frame HorizontalOptions="Fill" BackgroundColor="#ffa629" CornerRadius="0" Margin="-5" Padding="0,5" HeightRequest="180">
+                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween" HeightRequest="155">
+                        <!-- detalji proizvoda-->
+                        <StackLayout WidthRequest="180" Margin="8,0,0,0" Orientation="Vertical">
+                            <Label x:Name="ProductName" TextColor="White" FontSize="20" VerticalOptions="StartAndExpand" HorizontalTextAlignment="Start"/>
+                            <Label x:Name="ProductType" TextColor="White" FontSize="30" VerticalOptions="Start" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" HeightRequest="95"/>
+
+                            <!-- tagovi -->
+
+                            <StackLayout Orientation="Horizontal" Margin="0,0,0,3">
+                                <Frame BackgroundColor="Gray" BorderColor="Black" Padding="5,2" Margin="0, 5, 5, 0">
+                                    <Label x:Name="Tag1" FontSize="16" FontAttributes="Bold" TextColor="White"  VerticalTextAlignment="Center"/>
+                                </Frame>
+                                <Frame BackgroundColor="Gray" BorderColor="Black" Padding="5,2" Margin="0, 5, 5, 0">
+                                    <Label x:Name="Tag2" FontSize="16" FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center"/>
+                                </Frame>
+                            </StackLayout>
+                        </StackLayout>
+
+                        <!-- cijene -->
+                        <StackLayout WidthRequest="180" Margin="0,0,8,0" Orientation="Vertical">
+                            <Label x:Name="OldPrice" TextDecorations="Strikethrough" FontSize="24" TextColor="DarkRed" HorizontalTextAlignment="End"/>
+                            <Label x:Name="NewPrice" TextColor="White" FontSize="30" Margin="0, 0, 0, 0" HorizontalTextAlignment="End"/>
+                            <Frame BackgroundColor="Red" BorderColor="Black" Padding="10" HeightRequest="50" HorizontalOptions="End" VerticalOptions="EndAndExpand" Margin="0,0,0,3" HasShadow="True">
+                                <Label Text="DODAJ U KORPU" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="White">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnAddToCartTapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Frame>
+                        </StackLayout>
+                    </FlexLayout>
+                </Frame>
+
+                <!-- Galerija -->
+                <Frame HeightRequest="150" BackgroundColor="#FCD19C" Padding="0" CornerRadius="0">
+                    <ScrollView Orientation="Horizontal">
+                        <FlexLayout AlignItems="Center" HeightRequest="150" JustifyContent="SpaceEvenly">
+                            <Frame Padding="0" HeightRequest="100" WidthRequest="150" Margin="5,0" BorderColor="Gold">
+                                <Image Source="pc.png" HeightRequest="100"/>
+                            </Frame>
+                            <Frame Padding="0" HeightRequest="100" WidthRequest="150" Margin="0,0,5,0" BorderColor="Gold">
+                                <Image Source="pc.png" HeightRequest="100"/>
+                            </Frame>
+                            <Frame Padding="0" HeightRequest="100" WidthRequest="150" Margin="0,0,5,0" BorderColor="Gold">
+                                <Image Source="pc.png" HeightRequest="100"/>
+                            </Frame>
+                            <Frame Padding="0" HeightRequest="100" WidthRequest="150" Margin="0,0,5,0" BorderColor="Gold">
+                                <Image Source="pc.png" HeightRequest="100"/>
+                            </Frame>
+                            <Frame Padding="0" HeightRequest="100" WidthRequest="150" Margin="0,0,5,0" BorderColor="Gold">
+                                <Image Source="pc.png" HeightRequest="100"/>
+                            </Frame>
+                        </FlexLayout>
+                    </ScrollView>
+
+                </Frame>
+
+                <!-- opis proizvoda -->
+                <Frame HorizontalOptions="Fill" BackgroundColor="Gray" CornerRadius="0" Margin="0" HeightRequest="200">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Description" TextColor="White" FontSize="30" Margin="0, 0, 0, 15" />
+                        <Label x:Name="ProductDescription" TextColor="White" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- recenzije -->
+                <FlexLayout JustifyContent="SpaceBetween" AlignItems="Start" HeightRequest="80">
+                    <Label Text="Recenzije" FontSize="30" Margin="10,10,0,0"/>
+                    <StackLayout Orientation="Horizontal" Margin="10,10,0,0" Spacing="5" x:Name="AverageRatingLayout">
+
+                    </StackLayout>
+                </FlexLayout>
+                <ScrollView Orientation="Horizontal" Margin="20,0,20,20">
+                    <StackLayout x:Name="ReviewsStackLayout" Orientation="Horizontal">
+
+                    </StackLayout>
+                </ScrollView>
+
+                <Line Stroke="Black" X1="0" X2="500" Y1="0" Y2="0"/>
+
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Ostavite recenziju" FontSize="30" Margin="20,20,0,20"/>
+                    <FlexLayout Margin="20,0" JustifyContent="SpaceBetween">
+
+                        <Entry x:Name="nazivKorisnika" Placeholder="e.g Alex" WidthRequest="120"/>
+
+                        <StackLayout Orientation="Horizontal" Spacing="7">
+                            <Frame x:Name="ocjena1" BorderColor="#999999" Rotation="45" HeightRequest="10" WidthRequest="10" CornerRadius="3" BackgroundColor="#E6E6E6"/>
+                            <Frame x:Name="ocjena2" BorderColor="#999999" Rotation="45" HeightRequest="10" WidthRequest="10" CornerRadius="3" BackgroundColor="#E6E6E6"/>
+                            <Frame x:Name="ocjena3" BorderColor="#999999" Rotation="45" HeightRequest="10" WidthRequest="10" CornerRadius="3" BackgroundColor="#E6E6E6"/>
+                            <Frame x:Name="ocjena4" BorderColor="#999999" Rotation="45" HeightRequest="10" WidthRequest="10" CornerRadius="3" BackgroundColor="#E6E6E6"/>
+                            <Frame x:Name="ocjena5" BorderColor="#999999" Rotation="45" HeightRequest="10" WidthRequest="10" CornerRadius="3" BackgroundColor="#E6E6E6"/>
+                        </StackLayout>
+                    </FlexLayout>
+                    <Frame CornerRadius="10" Margin="20" Padding="15,15,15,-10" HeightRequest="150">
+                        <Entry x:Name="sadrzajRecenzije" Placeholder="Recite nam šta mislite o našem proizvodu..."></Entry>
+                    </Frame>
+
+                    <Button x:Name="objava" BackgroundColor="#ffa629" TextColor="White" Text="OBJAVI" WidthRequest="200" Padding="0" FontSize="25" Margin="0,0,0,20" Clicked="OnSubmitReviewClicked"></Button>
+                    
+                </StackLayout>     
+
+
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

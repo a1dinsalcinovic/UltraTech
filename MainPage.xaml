@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:visualStateManager="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+             x:Class="TechShop.MainPage" NavigationPage.HasNavigationBar="False">
+    <StackLayout Orientation="Vertical" BackgroundColor="#4f4f4f">
+        <StackLayout.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="#da0000" Offset="0.0" />
+                <GradientStop Color="#faE500" Offset="1.0" />
+            </LinearGradientBrush>
+        </StackLayout.Background>
+
+        <!-- Header -->
+        <FlexLayout BackgroundColor="#ffa629" HeightRequest="60" JustifyContent="SpaceBetween" AlignItems="Center">
+            <!-- logo -->
+            <Frame BorderColor="#eeeeee" CornerRadius="100" Padding="2" BackgroundColor="Transparent" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand" Margin="5, 0, 0, 0">
+                <Image Source="ultratechlogo.png" HeightRequest="50" WidthRequest="50"/>
+            </Frame>
+            <!-- search bar -->
+            <Frame Padding="15" HeightRequest="40" VerticalOptions="Center" WidthRequest="190" CornerRadius="30">
+                <Entry Placeholder="Search..." HeightRequest="40" TextChanged="SearchBar_TextChanged"></Entry>
+            </Frame>
+            <!-- Korpa-->
+            <Image Source="korpa.png" HeightRequest="50" Margin="0, 0, 5, 0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnKorpaClicked"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </FlexLayout>
+
+        <!-- Scrollable stranica -->
+        <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+            <StackLayout Orientation="Vertical" Margin="0,0,0,10">
+
+                <!-- reklame -->
+                <StackLayout Orientation="Vertical" HeightRequest="440" WidthRequest="420" Margin="0,0,0,10" Padding="0">
+                    <CarouselView x:Name="mainads" IndicatorView="indicatorView">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <AbsoluteLayout Padding="0" BackgroundColor="White">
+                                    <Image Source="{Binding Slika}" HeightRequest="420" AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" Scale="{Binding Scale}"/>
+                                    <Frame BackgroundColor="black" WidthRequest="420" HeightRequest="100" Padding="0" Opacity="0.8" AbsoluteLayout.LayoutBounds="0.5, 1, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" BorderColor="Black"/>
+                                    <Label Text="{Binding Title}" TextColor="White" FontSize="Title" AbsoluteLayout.LayoutBounds="0.05, 0.98, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" WidthRequest="400" Padding="20,0,5,0"/>
+                                </AbsoluteLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView x:Name="indicatorView" Margin="5" HorizontalOptions="Center" IndicatorColor="#4f4f4f" SelectedIndicatorColor="#ffa629" IndicatorSize="15" IndicatorsShape="Circle"/>
+                </StackLayout>
+                <Frame Padding="5" BackgroundColor="DarkGray" WidthRequest="250" HorizontalOptions="Start" Margin="-15,0,0,10" CornerRadius="20">
+                    <Label Text="KATEGORIJE" FontSize="36" TextColor="WhiteSmoke" FontAttributes="Bold" Background="Transparent" WidthRequest="250" HorizontalTextAlignment="Center" HorizontalOptions="Start"/>
+                </Frame>
+
+                <!-- Kategorije -->
+                <CollectionView ItemsSource="{Binding Categories}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="#5f5f5f" BorderColor="Gold" Margin="10" HeightRequest="170" WidthRequest="170" Padding="0">
+                                <AbsoluteLayout>
+                                    <Image Scale="{Binding ImageScale}" Margin="0, -20, 0, 0" Source="{Binding ImageSource}" AbsoluteLayout.LayoutBounds="0.5, 0.45, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" WidthRequest="{Binding ImageWidth}" HeightRequest="{Binding ImageHeight}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding Name}" Tapped="OnImageClicked" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Label Text="{Binding Name}" FontSize="Title" TextColor="WhiteSmoke" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="0.5, 0.9, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                                </AbsoluteLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+       <!-- Navigation testing buttons (we're such good developers) 
+        <FlexLayout VerticalOptions="End" BackgroundColor="#ffa629" JustifyContent="SpaceEvenly">
+            <Button Clicked="OnPreviewClicked" Text="ProductPreview"/>
+            <Button Clicked="OnListClicked" Text="ListPreview"/>
+        </FlexLayout>-->
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TechShop.Korpa"
+             x:Name="CartPage"
+             Title="Checkout" NavigationPage.HasNavigationBar="False">
+    <StackLayout Orientation="Vertical">
+        <StackLayout.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="#da0000" Offset="0.0"/>
+                <GradientStop Color="#faE500" Offset="1.0" />
+            </LinearGradientBrush>
+        </StackLayout.Background>
+        <FlexLayout BackgroundColor="#ffa629" HeightRequest="60" JustifyContent="SpaceBetween" AlignItems="Center">
+
+            <Image Scale="1.3" RotationY="180" Source="arrowright" HeightRequest="50" Margin="0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <!-- Logo -->
+            <Frame BorderColor="#eeeeee" CornerRadius="100" Padding="2" BackgroundColor="Transparent" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand" Margin="5, 0, 0, 0">
+                <Image Source="ultratechlogo.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoTapped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
+
+            <!-- Korpa -->
+            <Image Source="korpa.png" HeightRequest="50" Margin="0, 0, 5, 0"/>
+        </FlexLayout>
+        <ScrollView>
+            <StackLayout Orientation="Vertical" Padding="10">
+                <!-- Korpa (items) -->
+                <CollectionView ItemsSource="{Binding CartItems}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="#ffa629" CornerRadius="10" Padding="0" Margin="0,10" BackgroundColor="#4f4f4f">
+                                <StackLayout Orientation="Horizontal" Margin="0">
+                                    <Image Source="{Binding Image}" WidthRequest="70" HeightRequest="70"/>
+                                    <VerticalStackLayout>
+                                        <Label Text="{Binding Type}" FontSize="Medium" TextColor="White" Margin="10"/>
+                                        <Label Text="{Binding NewPrice, StringFormat='{0:C}'}" FontSize="Small" TextColor="LightGray" Margin="10,10,10,0"/>
+                                    </VerticalStackLayout>
+                                    <Label Text="Quantity: 1" HorizontalOptions="EndAndExpand" VerticalOptions="Center" TextColor="White" Margin="0,0,10,0"/>
+                                    <Button Text="Delete" TextColor="White" BackgroundColor="Red" Command="{Binding Path=BindingContext.RemoveFromCartCommand, Source={x:Reference CartPage}}" CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Totalna cijena -->
+                <Label Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}" FontSize="Large" TextColor="White" HorizontalOptions="Center" Margin="10,0" />
+
+                <!-- Informacije o nacinu kupovine -->
+                <Frame BorderColor="#ffa629" CornerRadius="10" Padding="10" Margin="0,10" BackgroundColor="#4f4f4f">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Informacije o Dostavi" FontSize="Large" FontAttributes="Bold" TextColor="White" />
+                        <Entry Placeholder="Ime i Prezime" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="Email" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="Grad" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="Adresa" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="Poštanski Broj" TextColor="White" PlaceholderColor="Gray" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- On/off switch za karticno placanje -->
+                <StackLayout Orientation="Horizontal" Padding="10,0">
+                    <Label Text="Kartično plaćanje" VerticalOptions="Center" TextColor="White" />
+                    <Switch x:Name="PaymentSwitch" Toggled="OnPaymentSwitchToggled" OnColor="#4f4f4f" ThumbColor="#ffa629"/>
+                </StackLayout>
+
+                <!-- informacije o karticnom placanju -->
+                <Frame x:Name="PaymentInfoSection" BorderColor="#ffa629" CornerRadius="10" Padding="10" Margin="0,10" BackgroundColor="#4f4f4f" IsVisible="False">
+                    <StackLayout Orientation="Vertical">
+                        <Label Text="Informacije o Plaćanju" FontSize="Large" FontAttributes="Bold" TextColor="White" />
+                        <Entry Placeholder="Broj Kartice" Keyboard="Numeric" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="Ime Vlasnika Kartice" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="Datum Isteka (MM/YY)" Keyboard="Numeric" TextColor="White" PlaceholderColor="Gray" />
+                        <Entry Placeholder="CVV/CVC" Keyboard="Numeric" TextColor="White" PlaceholderColor="Gray" />
+                    </StackLayout>
+                </Frame>
+
+                <!-- Complete Purchase Button -->
+                <Button Text="Complete Purchase" BackgroundColor="#ffa629" TextColor="White" CornerRadius="10" Margin="0,10" FontSize="20" BorderColor="Gold" BorderWidth="3"/>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

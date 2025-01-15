@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TechShop.ProductList"
+             Title="Products" NavigationPage.HasNavigationBar="False">
+    <StackLayout Orientation="Vertical">
+        <StackLayout.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Color="#da0000" Offset="0.0"/>
+                <GradientStop Color="#fae500" Offset="1.0"/>
+            </LinearGradientBrush>
+        </StackLayout.Background>
+        <!-- Header -->
+        <FlexLayout BackgroundColor="#ffa629" HeightRequest="60" JustifyContent="SpaceBetween" AlignItems="Center">
+            <Frame BorderColor="#eeeeee" CornerRadius="100" Padding="2" BackgroundColor="Transparent" HeightRequest="50" WidthRequest="50" HorizontalOptions="CenterAndExpand" Margin="5, 0, 0, 0">
+                <Image Source="ultratechlogo.png" HeightRequest="50" WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoTapped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
+            <Frame Padding="15" HeightRequest="40" VerticalOptions="Center" WidthRequest="190" CornerRadius="30">
+                <Entry Placeholder="Search..." HeightRequest="40" TextChanged="SearchBar_Proizvodi"></Entry>
+            </Frame>
+            <Image Source="korpa.png" HeightRequest="50" Margin="0, 0, 5, 0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnKorpaTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </FlexLayout>
+
+        <!-- product grid (dinamicni) -->
+        <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+            <CollectionView x:Name="ProductsCollectionView" ItemsLayout="VerticalGrid, 2"
+                SelectionMode="Single"
+                Margin="5, 10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" Margin="10" HeightRequest="240" CornerRadius="10" BorderColor="Gold" BackgroundColor="gray">
+                            <AbsoluteLayout WidthRequest="180" Padding="0">
+                                <!-- prod. image -->
+                                <Image Source="{Binding Image}" HorizontalOptions="Center" VerticalOptions="Start" AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"/>
+                                <!-- prod. details-->
+                                <Frame WidthRequest="180" HeightRequest="80" BackgroundColor="#ef9b2f" BorderColor="Gold" CornerRadius="0" Padding="0" AbsoluteLayout.LayoutBounds="0.5, 1, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional">
+                                    <StackLayout Padding="0">
+                                        <FlexLayout JustifyContent="SpaceBetween">
+                                            <Label Text="{Binding Name}" TextColor="White" FontSize="12" FontAttributes="Italic" Margin="0,0,0,0" WidthRequest="110" HorizontalOptions="StartAndExpand" Padding="5,0,0,0" />
+                                            <Label Text="{Binding OldPrice, StringFormat='{0:C}'}" Margin="0,0,5,0" Padding="0,0,5,0" VerticalTextAlignment="Start" HorizontalTextAlignment="End" HorizontalOptions="Start" TextColor="DarkRed" TextDecorations="Strikethrough" FontSize="12" WidthRequest="80">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Popust}" Value="false">
+                                                        <Setter Property="IsVisible" Value="False" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </FlexLayout>
+
+                                        <FlexLayout JustifyContent="SpaceBetween" Padding="0">
+                                            <Label Text="{Binding Type}" TextColor="White" FontSize="14"  Margin="2.5,0" WidthRequest="90" HorizontalOptions="Start"/>
+                                            <Label Text="{Binding NewPrice, StringFormat='{0:C}'}" Margin="0,0,5,0" Padding="0,0,5,0" VerticalTextAlignment="Start" HorizontalTextAlignment="End" HorizontalOptions="Start" TextColor="White" FontSize="14" FontAttributes="Bold" WidthRequest="80" />
+                                        </FlexLayout>
+                                        <StackLayout Spacing="5" Orientation="Horizontal" Margin="0, 0, 0, 0" VerticalOptions="EndAndExpand">
+                                            <!-- prod. tagovi -->
+                                            <Frame BackgroundColor="Gray" BorderColor="Black" Padding="3,1" Margin="5, 3, 0, 4">
+                                                <Label Text="{Binding Tag1}" FontSize="11" FontAttributes="Bold" TextColor="White"/>
+                                            </Frame>
+                                            <Frame BackgroundColor="Gray" BorderColor="Black" Padding="3,1" Margin="0, 3, 0, 4">
+                                                <Label Text="{Binding Tag2}" FontSize="11" FontAttributes="Bold" TextColor="White"/>
+                                            </Frame>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                                <!-- uslovni frame (ako ima popust) -->
+                                <Frame WidthRequest="170" Rotation="45"  BackgroundColor="Red" AbsoluteLayout.LayoutBounds="5, 0.1, AutoSize, AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional" Padding="5">
+                                    <Label Text="POPUST!" HorizontalOptions="Center" VerticalOptions="Center" FontSize="24" FontAttributes="Bold" TextColor="White"/>
+                                    <Frame.Triggers>
+                                        <DataTrigger TargetType="Frame" Binding="{Binding Popust}" Value="false">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </Frame.Triggers>
+                                </Frame>
+                            </AbsoluteLayout>
+                            <!-- tap gesture recognizer za navigaciju -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnProductTapped" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>
